@@ -1,0 +1,29 @@
+# React-Docker Project Guide 🚀
+
+### ১. সাধারণ ডেভেলপমেন্ট কমান্ড (Local Dev)
+- **সবকিছু অ্যাপ করতে (Nginx + Frontend):**
+  ```bash
+  docker-compose up
+  ```
+- **কোড চেঞ্জ ডিটেক্ট না করলে বা ইমেজ নতুন করে বিল্ড করতে চাইলে (যেমন package.json এ লাইব্রেরি অ্যাড করলে):**
+  ```bash
+  docker-compose up --build
+  ```
+- **কন্টেইনার অফ করতে:**
+  ```bash
+  docker-compose down
+  ```
+
+### ২. প্রোডাকশন বা Docker Hub-এ পুশ করার পদ্ধতি
+- **লেটেস্ট কোড বা লাইব্রেরি পুশ করতে:**
+  1. `docker-compose build`
+  2. `docker-compose push`
+
+### ৩. গুরুত্বপূর্ণ কনফিগারেশন টিপস
+- **Vite Config:** `vite.config.js`-এ অবশ্যই `server: { host: true }` থাকতে হবে, না হলে কন্টেইনারের বাইরে সাইট দেখা যাবে না।
+- **Internal Proxy:** Nginx `proxy_pass http://frontend:5173;` ব্যবহার করে ফ্রন্টএন্ডকে অ্যাক্সেস করে।
+- **Direct Access:** আপনি সরাসরি `http://localhost:5173` ব্যবহার করেও সাইট ব্রাউজ করতে পারেন।
+
+### ৪. লাইব্রেরি অ্যাড করার নিয়ম
+- হোস্টে `npm install <library-name>` দিন।
+- তারপর `docker-compose up --build` কমান্ডটি চালান যাতে নতুন লাইব্রেরিটি কন্টেইনারের ভেতরেও ইন্সটল হয়।
